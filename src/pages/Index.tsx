@@ -11,7 +11,6 @@ import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import OrderModal from "@/components/OrderModal";
-import ComparisonSlider from "@/components/ComparisonSlider";
 
 interface AnalysisResult {
   complexity: "simple" | "moderate" | "complex" | "highly-complex";
@@ -66,7 +65,6 @@ const Index = () => {
         )}
         
         <HowItWorks />
-        <ComparisonSlider />
         <BenefitsSection />
         <PricingSection />
         <TestimonialsSection />
