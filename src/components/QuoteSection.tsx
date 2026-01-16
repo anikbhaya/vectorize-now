@@ -10,6 +10,7 @@ interface AnalysisResult {
   hasDetails: boolean;
   basePrice: number;
   turnaroundHours: number;
+  imageCount?: number;
 }
 
 interface AddOn {
@@ -68,6 +69,7 @@ const QuoteSection = ({
   onPlaceOrder: (total: number, selectedAddOns: string[]) => void;
 }) => {
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
+  const [imageCount, setImageCount] = useState(1);
 
   const complexityLabels = {
     "simple": "Basic",
@@ -83,14 +85,34 @@ const QuoteSection = ({
     "highly-complex": "bg-destructive/20 text-destructive"
   };
 
+  // Bulk discount calculation
+  const getBulkDiscount = (count: number): { percentage: number; label: string } => {
+    if (count >= 10) return { percentage: 20, label: "20% Bulk Discount (10+ images)" };
+    if (count >= 5) return { percentage: 10, label: "10% Bulk Discount (5+ images)" };
+    return { percentage: 0, label: "" };
+  };
+
+  const bulkDiscount = getBulkDiscount(imageCount);
+
   const total = useMemo(() => {
     if (!analysisResult) return 0;
     const addOnTotal = selectedAddOns.reduce((sum, addOnId) => {
       const addOn = addOns.find(a => a.id === addOnId);
       return sum + (addOn?.price || 0);
     }, 0);
-    return analysisResult.basePrice + addOnTotal;
-  }, [analysisResult, selectedAddOns]);
+    const subtotal = (analysisResult.basePrice * imageCount) + addOnTotal;
+    const discountAmount = subtotal * (bulkDiscount.percentage / 100);
+    return Math.round((subtotal - discountAmount) * 100) / 100;
+  }, [analysisResult, selectedAddOns, imageCount, bulkDiscount.percentage]);
+
+  const subtotal = useMemo(() => {
+    if (!analysisResult) return 0;
+    const addOnTotal = selectedAddOns.reduce((sum, addOnId) => {
+      const addOn = addOns.find(a => a.id === addOnId);
+      return sum + (addOn?.price || 0);
+    }, 0);
+    return (analysisResult.basePrice * imageCount) + addOnTotal;
+  }, [analysisResult, selectedAddOns, imageCount]);
 
   const toggleAddOn = (id: string) => {
     setSelectedAddOns(prev => 
@@ -192,6 +214,41 @@ const QuoteSection = ({
                 <p className="text-sm text-muted-foreground">For {complexityLabels[analysisResult.complexity].toLowerCase()} vector tracing</p>
               </div>
 
+              {/* Bulk Order Section */}
+              <div className="mb-6 p-4 bg-accent/30 rounded-xl">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-medium text-foreground">Number of Images</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setImageCount(Math.max(1, imageCount - 1))}
+                      className="w-8 h-8 rounded-full bg-background border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                    >
+                      -
+                    </button>
+                    <span className="w-12 text-center font-bold text-foreground">{imageCount}</span>
+                    <button
+                      onClick={() => setImageCount(imageCount + 1)}
+                      className="w-8 h-8 rounded-full bg-background border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                
+                {bulkDiscount.percentage > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-primary">
+                    <CheckCircle className="w-4 h-4" />
+                    <span className="font-medium">{bulkDiscount.label}</span>
+                  </div>
+                )}
+                
+                {imageCount < 5 && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    💡 Order 5+ images for 10% off, or 10+ for 20% off!
+                  </p>
+                )}
+              </div>
+
               <div className="space-y-3 mb-6">
                 <p className="text-sm font-medium text-foreground">Optional Add-ons:</p>
                 {addOns.map((addOn) => (
@@ -219,6 +276,18 @@ const QuoteSection = ({
               </div>
 
               <div className="border-t border-border pt-6">
+                {bulkDiscount.percentage > 0 && (
+                  <div className="flex items-center justify-between mb-2 text-muted-foreground">
+                    <span>Subtotal ({imageCount} images)</span>
+                    <span className="line-through">${subtotal}</span>
+                  </div>
+                )}
+                {bulkDiscount.percentage > 0 && (
+                  <div className="flex items-center justify-between mb-2 text-primary">
+                    <span>Discount ({bulkDiscount.percentage}% off)</span>
+                    <span>-${(subtotal - total).toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-lg font-medium text-foreground">Total</span>
                   <span className="text-3xl font-bold text-primary">${total}</span>
