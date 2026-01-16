@@ -22,7 +22,7 @@ const FileUploadSection = ({ onQuoteGenerated }: { onQuoteGenerated: (result: An
     // Simulate AI analysis with realistic delays
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Simulate analysis based on file size and name
+    // Analyze based on file size, dimensions simulation, and name patterns
     const fileSize = imageFile.size;
     const fileName = imageFile.name.toLowerCase();
     
@@ -31,42 +31,55 @@ const FileUploadSection = ({ onQuoteGenerated }: { onQuoteGenerated: (result: An
     let hasGradients = false;
     let hasDetails = false;
     
-    if (fileSize > 500000) {
+    // Complexity scoring based on multiple factors
+    let complexityScore = 0;
+    
+    // File size indicates detail level
+    if (fileSize > 1000000) complexityScore += 4; // >1MB
+    else if (fileSize > 500000) complexityScore += 3; // 500KB-1MB
+    else if (fileSize > 200000) complexityScore += 2; // 200KB-500KB
+    else if (fileSize > 50000) complexityScore += 1; // 50KB-200KB
+    
+    // Check filename patterns for complexity hints
+    if (fileName.includes("photo") || fileName.includes("realistic")) complexityScore += 3;
+    if (fileName.includes("illustration") || fileName.includes("mascot")) complexityScore += 2;
+    if (fileName.includes("complex") || fileName.includes("detailed")) complexityScore += 2;
+    if (fileName.includes("logo") || fileName.includes("icon")) complexityScore -= 1;
+    if (fileName.includes("simple") || fileName.includes("basic")) complexityScore -= 2;
+    
+    // Determine complexity level
+    if (complexityScore >= 5) {
       complexity = "highly-complex";
-      estimatedColors = Math.floor(Math.random() * 15) + 10;
+      estimatedColors = Math.floor(Math.random() * 10) + 12; // 12-22 colors
       hasGradients = true;
       hasDetails = true;
-    } else if (fileSize > 200000) {
+    } else if (complexityScore >= 3) {
       complexity = "complex";
-      estimatedColors = Math.floor(Math.random() * 8) + 5;
-      hasGradients = Math.random() > 0.5;
+      estimatedColors = Math.floor(Math.random() * 5) + 6; // 6-10 colors
+      hasGradients = Math.random() > 0.4;
       hasDetails = true;
-    } else if (fileSize > 50000) {
+    } else if (complexityScore >= 1) {
       complexity = "moderate";
-      estimatedColors = Math.floor(Math.random() * 4) + 3;
+      estimatedColors = Math.floor(Math.random() * 3) + 3; // 3-5 colors
       hasGradients = Math.random() > 0.7;
-      hasDetails = false;
+      hasDetails = Math.random() > 0.5;
     } else {
       complexity = "simple";
-      estimatedColors = Math.floor(Math.random() * 2) + 1;
+      estimatedColors = Math.floor(Math.random() * 2) + 1; // 1-2 colors
       hasGradients = false;
       hasDetails = false;
     }
     
-    // Check for common logo keywords
-    if (fileName.includes("logo") || fileName.includes("icon")) {
-      complexity = complexity === "highly-complex" ? "complex" : complexity;
-    }
-    
+    // Pricing based on complexity (starting from $5)
     const basePrices = {
-      "simple": 15,
-      "moderate": 25,
-      "complex": 45,
-      "highly-complex": 75
+      "simple": 5,
+      "moderate": 12,
+      "complex": 25,
+      "highly-complex": 50
     };
     
     const turnaroundHours = {
-      "simple": 12,
+      "simple": 24,
       "moderate": 18,
       "complex": 24,
       "highly-complex": 48

@@ -3,22 +3,22 @@ import { Button } from "@/components/ui/button";
 
 const pricingTiers = [
   {
-    name: "Simple",
-    description: "Basic logos, icons, simple shapes",
-    price: 15,
+    name: "Basic",
+    description: "Simple logos, icons, text-based designs",
+    price: 5,
     features: [
       "1-2 colors",
-      "Simple outlines",
-      "12-hour delivery",
+      "Clean outlines only",
+      "24-hour delivery",
       "AI & EPS format",
       "1 revision"
     ],
     popular: false
   },
   {
-    name: "Moderate",
-    description: "Detailed logos, illustrations",
-    price: 25,
+    name: "Standard",
+    description: "Detailed logos, badges, emblems",
+    price: 12,
     features: [
       "3-5 colors",
       "Moderate detail",
@@ -29,12 +29,12 @@ const pricingTiers = [
     popular: true
   },
   {
-    name: "Complex",
-    description: "Intricate artwork, photos",
-    price: 45,
+    name: "Premium",
+    description: "Complex illustrations, mascots",
+    price: 25,
     features: [
-      "5-10 colors",
-      "High detail",
+      "6-10 colors",
+      "High detail & curves",
       "24-hour delivery",
       "All formats included",
       "3 revisions"
@@ -42,11 +42,11 @@ const pricingTiers = [
     popular: false
   },
   {
-    name: "Highly Complex",
-    description: "Photo-realistic conversions",
-    price: 75,
+    name: "Enterprise",
+    description: "Photo-realistic, intricate artwork",
+    price: 50,
     features: [
-      "10+ colors",
+      "Unlimited colors",
       "Gradients & effects",
       "48-hour delivery",
       "All formats + source",
