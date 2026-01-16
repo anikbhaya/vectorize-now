@@ -3,47 +3,7 @@ import { ChevronLeft, ChevronRight, Sparkles, ImageOff } from "lucide-react";
 import beforeImage from "@/assets/comparison-before.jpg";
 import afterImage from "@/assets/comparison-after.jpg";
 
-interface ComparisonExample {
-  tier: string;
-  tierLabel: string;
-  price: string;
-  beforeLabel: string;
-  afterLabel: string;
-}
-
-const examples: ComparisonExample[] = [
-  {
-    tier: "basic",
-    tierLabel: "Basic",
-    price: "$5",
-    beforeLabel: "Low-res JPG",
-    afterLabel: "Crisp Vector"
-  },
-  {
-    tier: "standard",
-    tierLabel: "Standard",
-    price: "$12",
-    beforeLabel: "Pixelated Logo",
-    afterLabel: "Sharp & Scalable"
-  },
-  {
-    tier: "premium",
-    tierLabel: "Premium",
-    price: "$25",
-    beforeLabel: "Blurry Artwork",
-    afterLabel: "HD Vector Art"
-  },
-  {
-    tier: "enterprise",
-    tierLabel: "Enterprise",
-    price: "$50",
-    beforeLabel: "Complex Image",
-    afterLabel: "Print-Ready"
-  }
-];
-
 const HeroComparisonSlider = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isAnimating, setIsAnimating] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,7 +32,7 @@ const HeroComparisonSlider = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isAnimating, currentIndex]);
+  }, [isAnimating]);
 
   const handleMouseDown = () => {
     isDragging.current = true;
@@ -105,66 +65,10 @@ const HeroComparisonSlider = () => {
     setSliderPosition(percentage);
   };
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % examples.length);
-    setSliderPosition(50);
-    setIsAnimating(true);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + examples.length) % examples.length);
-    setSliderPosition(50);
-    setIsAnimating(true);
-  };
-
-  const currentExample = examples[currentIndex];
-
-  const tierColors: Record<string, string> = {
-    basic: "bg-accent text-accent-foreground",
-    standard: "bg-primary/20 text-primary",
-    premium: "bg-chart-4/20 text-chart-4",
-    enterprise: "bg-destructive/20 text-destructive"
-  };
-
   return (
     <div className="w-full">
-      {/* Tier Navigation */}
-      <div className="flex items-center justify-center gap-1.5 mb-4 flex-wrap">
-        {examples.map((example, index) => (
-          <button
-            key={example.tier}
-            onClick={() => {
-              setCurrentIndex(index);
-              setSliderPosition(50);
-              setIsAnimating(true);
-            }}
-            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-              index === currentIndex
-                ? `${tierColors[example.tier]} ring-2 ring-offset-2 ring-offset-background ring-primary/30`
-                : "bg-muted/80 text-muted-foreground hover:bg-muted"
-            }`}
-          >
-            {example.tierLabel}
-          </button>
-        ))}
-      </div>
-
       {/* Comparison Slider */}
       <div className="relative">
-        {/* Navigation Arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-card/95 border border-border shadow-lg hover:bg-accent transition-all hover:scale-110"
-        >
-          <ChevronLeft className="w-5 h-5 text-foreground" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-card/95 border border-border shadow-lg hover:bg-accent transition-all hover:scale-110"
-        >
-          <ChevronRight className="w-5 h-5 text-foreground" />
-        </button>
-
         {/* Image Comparison Container */}
         <div
           ref={containerRef}
@@ -188,7 +92,7 @@ const HeroComparisonSlider = () => {
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center">
               <div className="flex items-center gap-2 text-white/90 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
                 <ImageOff className="w-4 h-4" />
-                <span className="font-semibold text-sm">{currentExample.beforeLabel}</span>
+                <span className="font-semibold text-sm">Low-res Raster</span>
               </div>
               <p className="text-xs text-white/70 mt-1 bg-black/30 px-2 py-0.5 rounded">Pixelated • Blurry edges</p>
             </div>
@@ -208,7 +112,7 @@ const HeroComparisonSlider = () => {
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center">
               <div className="flex items-center gap-2 text-white bg-primary/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
                 <Sparkles className="w-4 h-4" />
-                <span className="font-bold text-sm">{currentExample.afterLabel}</span>
+                <span className="font-bold text-sm">Crisp Vector</span>
               </div>
               <p className="text-xs text-white/90 mt-1 bg-primary/70 px-2 py-0.5 rounded">Crystal clear • Print-ready</p>
             </div>
@@ -238,13 +142,6 @@ const HeroComparisonSlider = () => {
           <div className="absolute top-3 right-3 px-3 py-1.5 bg-primary backdrop-blur-sm rounded-full text-xs font-bold text-primary-foreground shadow-lg flex items-center gap-1">
             <Sparkles className="w-3 h-3" />
             After
-          </div>
-
-          {/* Price Badge */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
-            <div className={`px-4 py-2 rounded-full text-sm font-bold shadow-lg ${tierColors[currentExample.tier]} ring-2 ring-offset-2 ring-offset-card ring-primary/20`}>
-              {currentExample.tierLabel} — From {currentExample.price}
-            </div>
           </div>
         </div>
 
