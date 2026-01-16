@@ -88,7 +88,7 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {step === 1 && "Complete Your Order"}
