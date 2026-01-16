@@ -25,35 +25,35 @@ const addOns: AddOn[] = [
     id: "rush",
     name: "Rush Delivery",
     description: "Get your files in half the time",
-    price: 15,
+    price: 5,
     icon: <Zap className="w-5 h-5" />
   },
   {
     id: "multiFormat",
     name: "Multiple Formats",
     description: "AI, EPS, SVG, PDF + PNG files",
-    price: 10,
+    price: 3,
     icon: <FileText className="w-5 h-5" />
   },
   {
     id: "colorVariants",
     name: "Color Variants",
     description: "Get 3 color variations of your design",
-    price: 20,
+    price: 8,
     icon: <Palette className="w-5 h-5" />
   },
   {
     id: "sourceLayers",
     name: "Organized Layers",
     description: "Properly named and organized layers",
-    price: 8,
+    price: 3,
     icon: <Layers className="w-5 h-5" />
   },
   {
     id: "priority",
     name: "Priority Support",
     description: "Direct communication with designer",
-    price: 12,
+    price: 5,
     icon: <Star className="w-5 h-5" />
   }
 ];
@@ -70,10 +70,10 @@ const QuoteSection = ({
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
 
   const complexityLabels = {
-    "simple": "Simple",
-    "moderate": "Moderate",
-    "complex": "Complex",
-    "highly-complex": "Highly Complex"
+    "simple": "Basic",
+    "moderate": "Standard",
+    "complex": "Premium",
+    "highly-complex": "Enterprise"
   };
 
   const complexityColors = {
