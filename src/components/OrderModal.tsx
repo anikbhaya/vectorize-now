@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, CreditCard, Mail, Copy, ArrowRight, Check } from "lucide-react";
+import { CheckCircle, CreditCard, Mail, Copy, ArrowRight, Check, Upload, Image } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface OrderModalProps {
@@ -27,9 +27,31 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
   const [copied, setCopied] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
+  const [paymentScreenshot, setPaymentScreenshot] = useState<File | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"screenshot" | "transaction">("transaction");
   const { toast } = useToast();
 
   const paymentEmail = "payment@vectortracepro.com";
+
+  const handleScreenshotUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const uploadedFile = e.target.files?.[0];
+    if (uploadedFile) {
+      if (uploadedFile.type.startsWith("image/")) {
+        setPaymentScreenshot(uploadedFile);
+        toast({
+          title: "Screenshot uploaded!",
+          description: "Payment proof has been attached to your order",
+        });
+      } else {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload an image file (JPG, PNG, etc.)",
+          variant: "destructive",
+        });
+      }
+    }
+  };
   
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(paymentEmail);
@@ -49,10 +71,18 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
   };
 
   const handleConfirmOrder = () => {
+    if (!transactionId && !paymentScreenshot) {
+      toast({
+        title: "Payment verification required",
+        description: "Please provide a transaction ID or upload a payment screenshot",
+        variant: "destructive",
+      });
+      return;
+    }
     setStep(3);
     toast({
       title: "Order Submitted!",
-      description: "Check your email for confirmation and payment instructions.",
+      description: "We'll verify your payment and start working on your order.",
     });
   };
 
@@ -158,6 +188,85 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
               </div>
             </div>
 
+            {/* Payment Verification Section */}
+            <div className="bg-card rounded-xl border border-border p-4">
+              <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-primary" />
+                Verify Your Payment
+              </h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Submit payment proof to speed up order processing
+              </p>
+              
+              <div className="flex gap-2 mb-4">
+                <Button
+                  variant={paymentMethod === "transaction" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setPaymentMethod("transaction")}
+                  className="flex-1"
+                >
+                  Transaction ID
+                </Button>
+                <Button
+                  variant={paymentMethod === "screenshot" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setPaymentMethod("screenshot")}
+                  className="flex-1"
+                >
+                  Upload Screenshot
+                </Button>
+              </div>
+
+              {paymentMethod === "transaction" ? (
+                <div className="space-y-2">
+                  <Label htmlFor="transactionId">Transaction ID / Reference Number</Label>
+                  <Input
+                    id="transactionId"
+                    placeholder="e.g., TXN123456789 or PayPal Reference"
+                    value={transactionId}
+                    onChange={(e) => setTransactionId(e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Enter the transaction ID from your payment confirmation
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Label>Payment Screenshot</Label>
+                  <div 
+                    className={`border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors ${
+                      paymentScreenshot 
+                        ? "border-primary bg-primary/5" 
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => document.getElementById("screenshot-upload")?.click()}
+                  >
+                    <input
+                      id="screenshot-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleScreenshotUpload}
+                    />
+                    {paymentScreenshot ? (
+                      <div className="flex items-center justify-center gap-2 text-primary">
+                        <Image className="w-5 h-5" />
+                        <span className="font-medium">{paymentScreenshot.name}</span>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                        <Upload className="w-8 h-8" />
+                        <span className="text-sm">Click to upload payment screenshot</span>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Upload a screenshot of your payment confirmation
+                  </p>
+                </div>
+              )}
+            </div>
+
             <div className="bg-primary/5 rounded-xl border border-primary/20 p-4">
               <h4 className="font-medium text-foreground mb-2">Important:</h4>
               <ul className="text-sm text-muted-foreground space-y-2">
@@ -167,7 +276,7 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">•</span>
-                  We'll start working on your order once payment is confirmed
+                  We'll verify your payment and start working immediately
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">•</span>
@@ -176,8 +285,14 @@ const OrderModal = ({ isOpen, onClose, total, selectedAddOns, file }: OrderModal
               </ul>
             </div>
 
-            <Button variant="hero" className="w-full" size="lg" onClick={handleConfirmOrder}>
-              I've Completed Payment
+            <Button 
+              variant="hero" 
+              className="w-full" 
+              size="lg" 
+              onClick={handleConfirmOrder}
+              disabled={!transactionId && !paymentScreenshot}
+            >
+              Submit Order with Payment Proof
               <CheckCircle className="w-4 h-4 ml-2" />
             </Button>
           </div>
