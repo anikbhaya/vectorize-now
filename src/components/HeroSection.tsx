@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, CheckCircle, Hand } from "lucide-react";
-import heroImage from "@/assets/hero-vector-comparison.jpg";
+import HeroComparisonSlider from "./HeroComparisonSlider";
 
 const HeroSection = () => {
   const scrollToUpload = () => {
@@ -68,17 +68,10 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right Content - Hero Image */}
+          {/* Right Content - Comparison Slider */}
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src={heroImage}
-                alt="Vector tracing transformation - before and after comparison"
-                className="w-full h-auto"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
-            </div>
-            
+            {/* Comparison Slider */}
+            <HeroComparisonSlider />
             {/* Floating badge */}
             <div className="absolute -bottom-4 -left-4 bg-card rounded-xl shadow-xl p-4 border border-border">
               <div className="flex items-center gap-3">
