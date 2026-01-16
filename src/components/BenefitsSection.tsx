@@ -1,6 +1,18 @@
-import { Maximize2, Palette, Layers, Zap, Shield, RefreshCw } from "lucide-react";
+import { Maximize2, Palette, Layers, Zap, Shield, RefreshCw, Hand, Ban } from "lucide-react";
 
 const benefits = [
+  {
+    icon: <Hand className="w-6 h-6" />,
+    title: "100% Manual Tracing",
+    description: "Every curve, line, and anchor point is carefully placed by our skilled designers. No auto-trace shortcuts.",
+    highlight: true
+  },
+  {
+    icon: <Ban className="w-6 h-6" />,
+    title: "No AI or Auto-Trace",
+    description: "We never use automated tools. Manual tracing ensures cleaner paths, fewer anchor points, and perfect results.",
+    highlight: true
+  },
   {
     icon: <Maximize2 className="w-6 h-6" />,
     title: "Infinite Scalability",
@@ -37,23 +49,89 @@ const BenefitsSection = () => {
   return (
     <section className="py-20 bg-accent/20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-bold mb-4">
+            <Hand className="w-4 h-4" />
+            <span>Handcrafted Quality</span>
+          </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Why Choose Vector Tracing?
+            Why Manual Tracing Matters
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transform your pixelated images into crisp, professional vector graphics 
-            that work everywhere.
+            Auto-trace tools create messy, bloated files. Our manual approach delivers 
+            clean, professional vectors that designers actually want to work with.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Manual vs Auto-trace Comparison Banner */}
+        <div className="bg-card border border-border rounded-2xl p-6 mb-12 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl">
+              <h4 className="font-bold text-destructive mb-3 flex items-center gap-2">
+                <Ban className="w-5 h-5" />
+                Auto-Trace Problems
+              </h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive">✗</span>
+                  Hundreds of unnecessary anchor points
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive">✗</span>
+                  Jagged edges and imperfect curves
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive">✗</span>
+                  Bloated file sizes that slow down software
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-destructive">✗</span>
+                  Difficult to edit or modify later
+                </li>
+              </ul>
+            </div>
+            <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl">
+              <h4 className="font-bold text-primary mb-3 flex items-center gap-2">
+                <Hand className="w-5 h-5" />
+                Our Manual Approach
+              </h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">✓</span>
+                  Minimal, optimized anchor points
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">✓</span>
+                  Smooth, perfect bezier curves
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">✓</span>
+                  Clean, lightweight files
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">✓</span>
+                  Easy to edit and scale infinitely
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="bg-card rounded-2xl border border-border p-6 hover:shadow-lg transition-all hover:-translate-y-1"
+              className={`bg-card rounded-2xl border p-6 hover:shadow-lg transition-all hover:-translate-y-1 ${
+                benefit.highlight 
+                  ? "border-primary/50 bg-primary/5" 
+                  : "border-border"
+              }`}
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${
+                benefit.highlight 
+                  ? "bg-primary text-primary-foreground" 
+                  : "bg-primary/10 text-primary"
+              }`}>
                 {benefit.icon}
               </div>
               <h3 className="text-xl font-bold text-foreground mb-2">
