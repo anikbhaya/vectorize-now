@@ -40,184 +40,229 @@ const examples: ComparisonExample[] = [
   }
 ];
 
-// SVG Logo designs for each tier - matching before/after
+// Realistic logo/illustration designs for each tier
 const LogoDesigns = {
   basic: {
-    // Simple geometric logo
+    // Coffee cup logo
     before: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
         <defs>
-          <filter id="blur-basic" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+          <filter id="blur-basic" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
           </filter>
         </defs>
-        <g filter="url(#blur-basic)" opacity="0.7">
-          <circle cx="60" cy="60" r="45" fill="hsl(var(--muted-foreground))" opacity="0.4" />
-          <rect x="35" y="35" width="50" height="50" rx="8" fill="hsl(var(--muted-foreground))" opacity="0.6" />
-          <circle cx="60" cy="60" r="15" fill="hsl(var(--muted-foreground))" opacity="0.8" />
+        <g filter="url(#blur-basic)">
+          {/* Cup body */}
+          <path d="M30 45 L35 95 Q37 105 60 105 Q83 105 85 95 L90 45 Z" fill="#8B4513" />
+          <path d="M30 45 L35 95 Q37 105 60 105 Q83 105 85 95 L90 45 Z" fill="none" stroke="#5D2E0C" strokeWidth="2" />
+          {/* Cup top rim */}
+          <ellipse cx="60" cy="45" rx="32" ry="8" fill="#A0522D" stroke="#5D2E0C" strokeWidth="2" />
+          {/* Handle */}
+          <path d="M90 55 Q110 55 110 75 Q110 90 90 85" fill="none" stroke="#5D2E0C" strokeWidth="6" strokeLinecap="round" />
+          {/* Steam */}
+          <path d="M45 30 Q48 20 45 10" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+          <path d="M60 25 Q63 15 60 5" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+          <path d="M75 30 Q72 20 75 10" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
+          {/* Coffee inside */}
+          <ellipse cx="60" cy="48" rx="26" ry="5" fill="#3E2723" />
         </g>
-        {/* Pixelation overlay */}
-        {[...Array(6)].map((_, i) =>
-          [...Array(6)].map((_, j) => (
-            <rect
-              key={`${i}-${j}`}
-              x={25 + i * 12}
-              y={25 + j * 12}
-              width="10"
-              height="10"
-              fill="hsl(var(--muted-foreground))"
-              opacity={Math.random() * 0.2}
-            />
-          ))
-        )}
       </svg>
     ),
     after: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
-        <circle cx="60" cy="60" r="45" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" />
-        <rect x="35" y="35" width="50" height="50" rx="8" fill="hsl(var(--primary))" opacity="0.2" stroke="hsl(var(--primary))" strokeWidth="2" />
-        <circle cx="60" cy="60" r="15" fill="hsl(var(--primary))" />
+        {/* Cup body */}
+        <path d="M30 45 L35 95 Q37 105 60 105 Q83 105 85 95 L90 45 Z" fill="hsl(var(--primary))" opacity="0.9" />
+        <path d="M30 45 L35 95 Q37 105 60 105 Q83 105 85 95 L90 45 Z" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" />
+        {/* Cup top rim */}
+        <ellipse cx="60" cy="45" rx="32" ry="8" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" strokeWidth="2" />
+        {/* Handle */}
+        <path d="M90 55 Q110 55 110 75 Q110 90 90 85" fill="none" stroke="hsl(var(--primary))" strokeWidth="5" strokeLinecap="round" />
+        {/* Steam */}
+        <path d="M45 30 Q48 20 45 10" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" opacity="0.5" />
+        <path d="M60 25 Q63 15 60 5" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" opacity="0.5" />
+        <path d="M75 30 Q72 20 75 10" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" opacity="0.5" />
+        {/* Coffee inside */}
+        <ellipse cx="60" cy="48" rx="26" ry="5" fill="hsl(var(--primary))" opacity="0.3" />
       </svg>
     )
   },
   standard: {
-    // Logo with text-like elements
+    // Mountain/outdoor logo
     before: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
         <defs>
-          <filter id="blur-standard" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" />
+          <filter id="blur-standard" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.9" />
           </filter>
         </defs>
-        <g filter="url(#blur-standard)" opacity="0.65">
-          <polygon points="60,15 100,45 100,90 60,105 20,90 20,45" fill="hsl(var(--muted-foreground))" opacity="0.5" />
-          <polygon points="60,25 90,48 90,82 60,95 30,82 30,48" fill="hsl(var(--muted-foreground))" opacity="0.7" />
-          <text x="60" y="65" textAnchor="middle" fontSize="18" fill="hsl(var(--muted-foreground))" fontWeight="bold">AB</text>
+        <g filter="url(#blur-standard)">
+          {/* Circle background */}
+          <circle cx="60" cy="60" r="50" fill="#2E7D32" />
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#1B5E20" strokeWidth="3" />
+          {/* Mountains */}
+          <polygon points="20,85 45,45 70,85" fill="#4CAF50" />
+          <polygon points="50,85 80,35 110,85" fill="#388E3C" />
+          {/* Snow caps */}
+          <polygon points="45,45 40,55 50,55" fill="#E8F5E9" />
+          <polygon points="80,35 73,48 87,48" fill="#E8F5E9" />
+          {/* Sun */}
+          <circle cx="85" cy="35" r="12" fill="#FFC107" />
+          {/* Trees */}
+          <polygon points="25,85 30,65 35,85" fill="#1B5E20" />
+          <polygon points="38,85 43,70 48,85" fill="#1B5E20" />
         </g>
-        {[...Array(5)].map((_, i) =>
-          [...Array(5)].map((_, j) => (
-            <rect
-              key={`${i}-${j}`}
-              x={28 + i * 13}
-              y={28 + j * 13}
-              width="11"
-              height="11"
-              fill="hsl(var(--muted-foreground))"
-              opacity={Math.random() * 0.15}
-            />
-          ))
-        )}
       </svg>
     ),
     after: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
-        <polygon points="60,15 100,45 100,90 60,105 20,90 20,45" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" />
-        <polygon points="60,25 90,48 90,82 60,95 30,82 30,48" fill="hsl(var(--primary))" opacity="0.15" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-        <text x="60" y="65" textAnchor="middle" fontSize="18" fill="hsl(var(--primary))" fontWeight="bold" fontFamily="sans-serif">AB</text>
+        {/* Circle background */}
+        <circle cx="60" cy="60" r="50" fill="hsl(var(--primary))" opacity="0.15" />
+        <circle cx="60" cy="60" r="50" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" />
+        {/* Mountains */}
+        <polygon points="20,85 45,45 70,85" fill="hsl(var(--primary))" opacity="0.4" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        <polygon points="50,85 80,35 110,85" fill="hsl(var(--primary))" opacity="0.6" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        {/* Snow caps */}
+        <polygon points="45,45 40,55 50,55" fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth="1" />
+        <polygon points="80,35 73,48 87,48" fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth="1" />
+        {/* Sun */}
+        <circle cx="85" cy="35" r="12" fill="hsl(var(--primary))" opacity="0.3" stroke="hsl(var(--primary))" strokeWidth="2" />
+        {/* Trees */}
+        <polygon points="25,85 30,65 35,85" fill="hsl(var(--primary))" />
+        <polygon points="38,85 43,70 48,85" fill="hsl(var(--primary))" />
       </svg>
     )
   },
   premium: {
-    // Complex mascot-like design
+    // Lion mascot
     before: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
         <defs>
-          <filter id="blur-premium" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+          <filter id="blur-premium" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
           </filter>
         </defs>
-        <g filter="url(#blur-premium)" opacity="0.6">
-          {/* Head */}
-          <circle cx="60" cy="45" r="28" fill="hsl(var(--muted-foreground))" opacity="0.6" />
-          {/* Body */}
-          <ellipse cx="60" cy="90" rx="25" ry="20" fill="hsl(var(--muted-foreground))" opacity="0.5" />
-          {/* Eyes */}
-          <circle cx="50" cy="42" r="6" fill="hsl(var(--muted-foreground))" opacity="0.8" />
-          <circle cx="70" cy="42" r="6" fill="hsl(var(--muted-foreground))" opacity="0.8" />
+        <g filter="url(#blur-premium)">
+          {/* Mane */}
+          <circle cx="60" cy="58" r="45" fill="#F57C00" />
+          <circle cx="60" cy="58" r="38" fill="#FF9800" />
+          {/* Face */}
+          <ellipse cx="60" cy="62" rx="28" ry="30" fill="#FFB74D" />
           {/* Ears */}
-          <circle cx="38" cy="25" r="10" fill="hsl(var(--muted-foreground))" opacity="0.5" />
-          <circle cx="82" cy="25" r="10" fill="hsl(var(--muted-foreground))" opacity="0.5" />
+          <circle cx="32" cy="35" r="12" fill="#FF9800" />
+          <circle cx="88" cy="35" r="12" fill="#FF9800" />
+          <circle cx="32" cy="35" r="7" fill="#FFB74D" />
+          <circle cx="88" cy="35" r="7" fill="#FFB74D" />
+          {/* Eyes */}
+          <ellipse cx="48" cy="55" rx="6" ry="7" fill="#3E2723" />
+          <ellipse cx="72" cy="55" rx="6" ry="7" fill="#3E2723" />
+          <circle cx="50" cy="53" r="2" fill="white" />
+          <circle cx="74" cy="53" r="2" fill="white" />
+          {/* Nose */}
+          <ellipse cx="60" cy="70" rx="8" ry="6" fill="#5D4037" />
+          {/* Mouth */}
+          <path d="M52 78 Q60 85 68 78" fill="none" stroke="#5D4037" strokeWidth="2" strokeLinecap="round" />
+          {/* Whisker dots */}
+          <circle cx="45" cy="75" r="2" fill="#5D4037" />
+          <circle cx="40" cy="72" r="2" fill="#5D4037" />
+          <circle cx="75" cy="75" r="2" fill="#5D4037" />
+          <circle cx="80" cy="72" r="2" fill="#5D4037" />
         </g>
-        {[...Array(6)].map((_, i) =>
-          [...Array(6)].map((_, j) => (
-            <rect
-              key={`${i}-${j}`}
-              x={22 + i * 13}
-              y={15 + j * 15}
-              width="11"
-              height="13"
-              fill="hsl(var(--muted-foreground))"
-              opacity={Math.random() * 0.18}
-            />
-          ))
-        )}
       </svg>
     ),
     after: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
-        {/* Head */}
-        <circle cx="60" cy="45" r="28" fill="hsl(var(--primary))" opacity="0.15" stroke="hsl(var(--primary))" strokeWidth="2.5" />
-        {/* Body */}
-        <ellipse cx="60" cy="90" rx="25" ry="20" fill="hsl(var(--primary))" opacity="0.1" stroke="hsl(var(--primary))" strokeWidth="2" />
-        {/* Eyes */}
-        <circle cx="50" cy="42" r="6" fill="hsl(var(--primary))" />
-        <circle cx="70" cy="42" r="6" fill="hsl(var(--primary))" />
-        <circle cx="52" cy="40" r="2" fill="hsl(var(--primary-foreground))" />
-        <circle cx="72" cy="40" r="2" fill="hsl(var(--primary-foreground))" />
+        {/* Mane */}
+        <circle cx="60" cy="58" r="45" fill="hsl(var(--primary))" opacity="0.2" stroke="hsl(var(--primary))" strokeWidth="2" />
+        <circle cx="60" cy="58" r="38" fill="hsl(var(--primary))" opacity="0.3" />
+        {/* Face */}
+        <ellipse cx="60" cy="62" rx="28" ry="30" fill="hsl(var(--primary))" opacity="0.15" stroke="hsl(var(--primary))" strokeWidth="2" />
         {/* Ears */}
-        <circle cx="38" cy="25" r="10" fill="hsl(var(--primary))" opacity="0.3" stroke="hsl(var(--primary))" strokeWidth="2" />
-        <circle cx="82" cy="25" r="10" fill="hsl(var(--primary))" opacity="0.3" stroke="hsl(var(--primary))" strokeWidth="2" />
-        {/* Smile */}
-        <path d="M50 55 Q60 65 70 55" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="32" cy="35" r="12" fill="hsl(var(--primary))" opacity="0.3" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        <circle cx="88" cy="35" r="12" fill="hsl(var(--primary))" opacity="0.3" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        <circle cx="32" cy="35" r="7" fill="hsl(var(--primary))" opacity="0.15" />
+        <circle cx="88" cy="35" r="7" fill="hsl(var(--primary))" opacity="0.15" />
+        {/* Eyes */}
+        <ellipse cx="48" cy="55" rx="6" ry="7" fill="hsl(var(--primary))" />
+        <ellipse cx="72" cy="55" rx="6" ry="7" fill="hsl(var(--primary))" />
+        <circle cx="50" cy="53" r="2" fill="hsl(var(--background))" />
+        <circle cx="74" cy="53" r="2" fill="hsl(var(--background))" />
+        {/* Nose */}
+        <ellipse cx="60" cy="70" rx="8" ry="6" fill="hsl(var(--primary))" />
+        {/* Mouth */}
+        <path d="M52 78 Q60 85 68 78" fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Whisker dots */}
+        <circle cx="45" cy="75" r="2" fill="hsl(var(--primary))" />
+        <circle cx="40" cy="72" r="2" fill="hsl(var(--primary))" />
+        <circle cx="75" cy="75" r="2" fill="hsl(var(--primary))" />
+        <circle cx="80" cy="72" r="2" fill="hsl(var(--primary))" />
       </svg>
     )
   },
   enterprise: {
-    // Complex detailed design with gradients
+    // Eagle/Phoenix emblem
     before: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
         <defs>
-          <filter id="blur-enterprise" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" />
+          <filter id="blur-enterprise" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.1" />
           </filter>
         </defs>
-        <g filter="url(#blur-enterprise)" opacity="0.55">
-          {/* Shield shape */}
-          <path d="M60 10 L100 30 L100 70 Q100 100 60 115 Q20 100 20 70 L20 30 Z" fill="hsl(var(--muted-foreground))" opacity="0.5" />
-          {/* Inner details */}
-          <path d="M60 25 L85 40 L85 65 Q85 85 60 95 Q35 85 35 65 L35 40 Z" fill="hsl(var(--muted-foreground))" opacity="0.6" />
-          {/* Star */}
-          <polygon points="60,35 65,50 80,50 68,60 73,75 60,65 47,75 52,60 40,50 55,50" fill="hsl(var(--muted-foreground))" opacity="0.7" />
+        <g filter="url(#blur-enterprise)">
+          {/* Shield */}
+          <path d="M60 8 L100 25 L100 60 Q100 95 60 112 Q20 95 20 60 L20 25 Z" fill="#1565C0" stroke="#0D47A1" strokeWidth="3" />
+          {/* Inner shield */}
+          <path d="M60 18 L90 32 L90 58 Q90 85 60 98 Q30 85 30 58 L30 32 Z" fill="#1976D2" />
+          {/* Eagle wings */}
+          <path d="M60 40 Q30 35 20 55 Q35 50 45 60 Q50 50 60 45" fill="#FFC107" />
+          <path d="M60 40 Q90 35 100 55 Q85 50 75 60 Q70 50 60 45" fill="#FFC107" />
+          {/* Eagle body */}
+          <ellipse cx="60" cy="60" rx="12" ry="18" fill="#FFC107" />
+          {/* Eagle head */}
+          <circle cx="60" cy="42" r="10" fill="#FFC107" />
+          {/* Beak */}
+          <polygon points="60,48 55,52 60,58 65,52" fill="#FF8F00" />
+          {/* Eyes */}
+          <circle cx="56" cy="40" r="2" fill="#0D47A1" />
+          <circle cx="64" cy="40" r="2" fill="#0D47A1" />
+          {/* Tail feathers */}
+          <path d="M48 75 L60 90 L72 75" fill="#FFC107" stroke="#FF8F00" strokeWidth="1" />
+          {/* Stars */}
+          <circle cx="35" cy="45" r="3" fill="white" />
+          <circle cx="85" cy="45" r="3" fill="white" />
+          <circle cx="60" cy="25" r="3" fill="white" />
         </g>
-        {[...Array(7)].map((_, i) =>
-          [...Array(7)].map((_, j) => (
-            <rect
-              key={`${i}-${j}`}
-              x={18 + i * 12}
-              y={12 + j * 14}
-              width="10"
-              height="12"
-              fill="hsl(var(--muted-foreground))"
-              opacity={Math.random() * 0.15}
-            />
-          ))
-        )}
       </svg>
     ),
     after: (
       <svg viewBox="0 0 120 120" className="w-full h-full">
         <defs>
-          <linearGradient id="shield-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="shield-fill" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
             <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
           </linearGradient>
         </defs>
-        {/* Shield shape */}
-        <path d="M60 10 L100 30 L100 70 Q100 100 60 115 Q20 100 20 70 L20 30 Z" fill="url(#shield-gradient)" stroke="hsl(var(--primary))" strokeWidth="2.5" />
-        {/* Inner details */}
-        <path d="M60 25 L85 40 L85 65 Q85 85 60 95 Q35 85 35 65 L35 40 Z" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" opacity="0.7" />
-        {/* Star */}
-        <polygon points="60,35 65,50 80,50 68,60 73,75 60,65 47,75 52,60 40,50 55,50" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" strokeWidth="1" />
+        {/* Shield */}
+        <path d="M60 8 L100 25 L100 60 Q100 95 60 112 Q20 95 20 60 L20 25 Z" fill="url(#shield-fill)" stroke="hsl(var(--primary))" strokeWidth="3" />
+        {/* Inner shield */}
+        <path d="M60 18 L90 32 L90 58 Q90 85 60 98 Q30 85 30 58 L30 32 Z" fill="hsl(var(--primary))" opacity="0.15" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        {/* Eagle wings */}
+        <path d="M60 40 Q30 35 20 55 Q35 50 45 60 Q50 50 60 45" fill="hsl(var(--primary))" opacity="0.6" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        <path d="M60 40 Q90 35 100 55 Q85 50 75 60 Q70 50 60 45" fill="hsl(var(--primary))" opacity="0.6" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        {/* Eagle body */}
+        <ellipse cx="60" cy="60" rx="12" ry="18" fill="hsl(var(--primary))" opacity="0.4" stroke="hsl(var(--primary))" strokeWidth="2" />
+        {/* Eagle head */}
+        <circle cx="60" cy="42" r="10" fill="hsl(var(--primary))" opacity="0.5" stroke="hsl(var(--primary))" strokeWidth="2" />
+        {/* Beak */}
+        <polygon points="60,48 55,52 60,58 65,52" fill="hsl(var(--primary))" />
+        {/* Eyes */}
+        <circle cx="56" cy="40" r="2" fill="hsl(var(--primary))" />
+        <circle cx="64" cy="40" r="2" fill="hsl(var(--primary))" />
+        {/* Tail feathers */}
+        <path d="M48 75 L60 90 L72 75" fill="hsl(var(--primary))" opacity="0.5" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+        {/* Stars */}
+        <circle cx="35" cy="45" r="3" fill="hsl(var(--primary))" />
+        <circle cx="85" cy="45" r="3" fill="hsl(var(--primary))" />
+        <circle cx="60" cy="25" r="3" fill="hsl(var(--primary))" />
       </svg>
     )
   }
@@ -240,8 +285,8 @@ const HeroComparisonSlider = () => {
     
     const animate = () => {
       position += direction * 0.3;
-      if (position >= 75) direction = -1;
-      if (position <= 25) direction = 1;
+      if (position >= 70) direction = -1;
+      if (position <= 30) direction = 1;
       setSliderPosition(position);
       animationRef.current = requestAnimationFrame(animate);
     };
@@ -359,12 +404,11 @@ const HeroComparisonSlider = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
         >
-          {/* Before Image (Raster/Blurry) */}
-          <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted to-muted-foreground/10">
+          {/* Before Image (Slightly Blurry) */}
+          <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted/95 to-muted-foreground/5">
             <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
               {/* Blurry Logo */}
-              <div className="w-32 h-32 md:w-40 md:h-40 mb-4 relative">
-                <div className="absolute inset-0 bg-muted-foreground/5 rounded-xl" />
+              <div className="w-36 h-36 md:w-44 md:h-44 mb-3 relative">
                 {currentDesign.before}
               </div>
               
@@ -373,14 +417,7 @@ const HeroComparisonSlider = () => {
                 <ImageOff className="w-4 h-4" />
                 <span className="font-semibold text-sm">{currentExample.beforeLabel}</span>
               </div>
-              <p className="text-xs text-muted-foreground/60 mt-1">Pixelated • Blurry • Limited Size</p>
-            </div>
-            
-            {/* Scan lines effect for old/degraded look */}
-            <div className="absolute inset-0 pointer-events-none opacity-10">
-              {[...Array(40)].map((_, i) => (
-                <div key={i} className="h-px bg-muted-foreground/50" style={{ marginTop: i * 8 }} />
-              ))}
+              <p className="text-xs text-muted-foreground/60 mt-1">Slightly blurry • Limited quality</p>
             </div>
           </div>
 
@@ -391,11 +428,10 @@ const HeroComparisonSlider = () => {
           >
             <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
               {/* Clean Vector Logo */}
-              <div className="w-32 h-32 md:w-40 md:h-40 mb-4 relative">
-                <div className="absolute inset-0 bg-primary/5 rounded-xl" />
+              <div className="w-36 h-36 md:w-44 md:h-44 mb-3 relative">
                 {currentDesign.after}
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-primary/10 blur-xl rounded-full scale-75" />
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 bg-primary/5 blur-2xl rounded-full scale-90 -z-10" />
               </div>
               
               {/* After Label */}
@@ -403,7 +439,7 @@ const HeroComparisonSlider = () => {
                 <Sparkles className="w-4 h-4" />
                 <span className="font-bold text-sm">{currentExample.afterLabel}</span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Sharp • Scalable • Print-Ready</p>
+              <p className="text-xs text-muted-foreground mt-1">Crystal clear • Infinitely scalable</p>
             </div>
           </div>
 
@@ -436,7 +472,7 @@ const HeroComparisonSlider = () => {
           {/* Price Badge */}
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
             <div className={`px-4 py-2 rounded-full text-sm font-bold shadow-lg ${tierColors[currentExample.tier]} ring-2 ring-offset-2 ring-offset-card ring-primary/20`}>
-              {currentExample.tierLabel} Package — From {currentExample.price}
+              {currentExample.tierLabel} — From {currentExample.price}
             </div>
           </div>
         </div>
